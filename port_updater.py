@@ -72,6 +72,7 @@ class PortUpdater:
                 delete_port_button.click()
                 print("Deleted existing port")
             # Re-locate the new port button after any potential page changes
+            time.sleep(2)
             new_port_button_xpath = '/html/body/div[1]/div[3]/div/div[6]/div/div[3]/div/button[1]'
             new_port_button = self.wait.until(EC.element_to_be_clickable((By.XPATH, new_port_button_xpath)))
             new_port_button.click()
