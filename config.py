@@ -17,5 +17,7 @@ config = {
         'url': 'https://mrcaters.me/qbittorrent/',
         'username': os.getenv('QBITTORRENT_USERNAME'),
         'password': os.getenv('QBITTORRENT_PASSWORD')
-    }
+    },
+
+    'chrome_binary_path': os.getenv('CHROME_BINARY_PATH')
 }

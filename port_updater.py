@@ -20,6 +20,11 @@ class PortUpdater:
             chrome_options.add_argument("--disable-gpu")
         else:
             print("Running with GUI browser")
+        
+        # Set the binary location if specified in the config
+        if 'chrome_binary_path' in config and config['chrome_binary_path']:
+            chrome_options.binary_location = config['chrome_binary_path']
+
         self.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_options)
         self.wait = WebDriverWait(self.driver, 10)
         print("PortUpdater initialized")
@@ -53,6 +58,9 @@ class PortUpdater:
             print("Windscribe login complete")
         except Exception as e:
             print(f"Error logging into Windscribe: {str(e)}")
+            # Print the current state of the HTML page
+            print("Current HTML page source:")
+            print(self.driver.page_source)
             raise
 
     def get_port_from_windscribe(self):
@@ -65,7 +73,7 @@ class PortUpdater:
             time.sleep(2)
             # Check to see if there is a port that already exists
             # If so, click the button to remove it
-            delete_port_button_xpath = '/html/body/div[1]/div[3]/div/div[6]/div/div[3]/div/button'
+            delete_port_button_xpath = '//button[@class="btn green-btn" and text()="Delete Port"]'
             delete_port_button = self.driver.find_element(By.XPATH, delete_port_button_xpath)
             if delete_port_button.is_enabled():
                 print("Existing port found, deleting")
