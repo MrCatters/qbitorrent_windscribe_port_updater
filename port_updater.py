@@ -71,15 +71,14 @@ class PortUpdater:
                 print("Existing port found, deleting")
                 delete_port_button.click()
                 print("Deleted existing port")
-            # Get a new port
-            new_port_button = self.wait.until(EC.element_to_be_clickable(
-                (By.XPATH, '/html/body/div[1]/div[3]/div/div[6]/div/div[3]/div/button[1]')))
+            # Re-locate the new port button after any potential page changes
+            new_port_button_xpath = '/html/body/div[1]/div[3]/div/div[6]/div/div[3]/div/button[1]'
+            new_port_button = self.wait.until(EC.element_to_be_clickable((By.XPATH, new_port_button_xpath)))
             new_port_button.click()
             print("Clicked on new port button")
             # Get the port value
             time.sleep(2)
-            port_element = self.wait.until(EC.presence_of_element_located(
-                (By.XPATH, '/html/body/div[1]/div[3]/div/div[6]/div/div[3]/div/div[1]/span[2]')))
+            port_element = self.wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div[3]/div/div[6]/div/div[3]/div/div[1]/span[2]')))
             print("Got new port value")
             return port_element.text
         except Exception as e:
